@@ -469,7 +469,10 @@ public class Dictionary {
 						}
 					}
 
-					if (entity.getContentLength() > 0) {
+					// The Content-Length will be ignore when the response header
+					// contains `Transfer-Encoding: chunked` or `Content-Encoding: gzip`.
+					// In order to solve this problem, delete the condition.
+					//if (entity.getContentLength() > 0) {
 						in = new BufferedReader(new InputStreamReader(entity.getContent(), charset));
 						String line;
 						while ((line = in.readLine()) != null) {
@@ -478,7 +481,7 @@ public class Dictionary {
 						in.close();
 						response.close();
 						return buffer;
-					}
+					//}
 			}
 			}
 			response.close();
